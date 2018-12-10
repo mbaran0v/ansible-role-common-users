@@ -1,0 +1,37 @@
+---
+
+- name: create groups
+  group:
+    name: "{{ item.name }}"
+    state: "{{ item.state|default(present) }}"
+    gid: "{{ item.gid|default(omit) }}"
+    system: "{{ item.system|default('no') }}"
+  with_items:
+    - "{{ user_groups }}"
+
+- name: create users
+  user:
+    name: "{{ item.name }}"
+    password: "{{ item.password|default('!') }}"
+    uid: "{{ item.uid|default(omit) }}"
+    group: "{{ item.group|default(omit) }}"
+    groups: "{{ item.groups|join(',') }}"
+    shell: "{{ item.shell|default('/bin/bash') }}"
+    state: "{{ item.state|default(present) }}"
+    system: "{{ item.system|default('no') }}"
+    createhome: "{{ item.createhome|default('yes') }}"
+    comment: "{{ item.comment|default(omit) }}"
+  with_items:
+    - "{{ user_list }}"
+    - "{{ extra_user_list }}"
+
+- name: copy ssh keys
+  authorized_key:
+    user: "{{ item.name }}"
+    key: "{{ lookup('file', item.keyfile) }}"
+    state: present
+    exclusive: yes
+  when: item.keyfile != ""
+  with_items:
+    - "{{ user_list }}"
+    - "{{ extra_user_list }}"

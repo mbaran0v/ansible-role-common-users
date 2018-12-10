@@ -1,0 +1,23 @@
+---
+
+# set variables
+- name: include OS-specific variables
+  include_vars: "{{ item }}"
+  with_first_found:
+    - "{{ ansible_distribution }}-{{ ansible_distribution_major_version }}.yaml"
+    - "{{ ansible_distribution }}.yaml"
+    - "{{ ansible_os_family }}-{{ ansible_distribution_major_version }}.yaml"
+    - "{{ ansible_os_family }}.yaml"
+
+# setup packages
+- name: install some packages
+  package:
+    name: "{{ main_packages }}"
+    state: "{{ pkg_state }}"
+
+# configure
+- name: include non OS-specific tasks for create user
+  include: "configure-users.yaml"
+
+- name: include non OS-specific tasks for configure sudo
+  include: "configure-sudo.yaml"

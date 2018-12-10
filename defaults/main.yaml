@@ -1,0 +1,64 @@
+---
+
+# may be present or latest
+pkg_state: present
+
+main_packages:
+  - sudo
+
+# SHA-512 hash for password
+# python -c "from passlib.hash import sha512_crypt; import getpass; print sha512_crypt.using(rounds=5000).hash(getpass.getpass())"
+
+# list of user groups
+user_groups: []
+  # - name: group1
+  #   gid: 1001
+  #   state: present
+  #   system: no
+
+# list of users
+user_list: []
+  # - name: admin
+  #   uid: 1001
+  #   password: "password sha512 hash"
+  #   createhome: yes
+  #   shell: "/bin/bash"
+  #   keyfile: "key_admin.pub"
+  #   group: admin
+  #   groups: [ "group1", "group2" ]
+  #   shell: /bin/bash
+  #   system: no
+  #   comment: "Big Admin"
+  #   state: present
+  # - name: user
+  #   shell: "/bin/zsh"
+  #   keyfile: ""
+  #   group: www-data
+  #   groups: [ "group1" ]
+  #   state: present
+
+# list of extra users
+# if you user user_list for group_variables and want to extra users for some hosts via host variables
+extra_user_list: []
+
+sudo_include_dir: /etc/sudoers.d/
+
+sudo_users: []
+  # - name: wheel
+  #   user: "%wheel"
+  #   host: ALL
+  #   runas: ALL
+  #   tag: NOPASSWD
+  #   cmd: ALL
+  # - name: admins
+  #   user: ADMINS
+  #   host: ALL
+  #   runas: ""
+  #   tag: ""
+  #   cmd: ALL
+  # - name: developers
+  #   user: DEVELOPERS
+  #   host: ALL
+  #   runas: ""
+  #   tag: ""
+  #   cmd: SOFTWARE, SERVICES

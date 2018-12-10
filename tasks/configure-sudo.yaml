@@ -1,0 +1,12 @@
+---
+
+- name: configure sudo
+  template:
+    src: sudo.include.conf
+    dest: "{{ sudo_include_dir }}/{{ item.name }}"
+    owner: root
+    group: root
+    mode: 0440
+    validate: "visudo -cf %s"
+  with_items:
+    - "{{ sudo_users }}"
