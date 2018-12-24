@@ -1,4 +1,4 @@
-# Ansible role: common-users
+# Ansible role: local-users
 
 Ansible role for user and groups management. Currently this works on Debian and RedHat based linux systems. Tested platforms are:
 
@@ -72,7 +72,7 @@ Including an example of how to use your role (for instance, with variables passe
 ```yaml
 - hosts: app
   roles:
-      - mbaran0v.common-users
+      - mbaran0v.local-users
 ```
 
 License
